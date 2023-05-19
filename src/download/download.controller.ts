@@ -70,15 +70,16 @@ export class DownloadController {
 
   @Post('mp3')
   async downloadAudio(@Req() req, @Res() res) {
-    const videoId = req.body.split('=')[1];
+    const videoId = req.body.url.split('=')[1];
+    console.log(videoId);
     if (!videoId) {
       return res.status(400).send('Video ID is required');
     } else {
       try {
         const fetchAPI = await fetch(
-          `https://youtube-mp36.p.rapidapi.com/d'?id=${videoId}`,
+          `https://youtube-mp36.p.rapidapi.com/dl?id=${videoId}`,
           {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'x-rapidapi-key': process.env.API_KEY,
               'x-rapidapi-host': process.env.API_HOST,
